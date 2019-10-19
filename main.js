@@ -4,7 +4,7 @@
  * @author Danny Geisz
  */
 
-
+/** Variables that store the size of the game window. */
 const windowHeight = 600;
 const windowWidth = 900;
 

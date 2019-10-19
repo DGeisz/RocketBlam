@@ -16,29 +16,45 @@ let rockets = [];
 /** List of all explosion objects that occur. */
 let splosions = [];
 
-/** Tells whether the user has begun the game*/
+/** Tells whether the game has actually begun. */
 let gameInitialized = false;
 
+/** Starts the game initialization sequence.  The initialization
+ * sequence includes the main menu disappearing and the cannon rising
+ * from beneath the screen */
 let beginInitSequence = false;
 
+/** Main counter that dictates when initialization events should occur. */
 let initCounter = 0;
 
+/** Indicates whether the start button has disappeared. */
 let startGone  = false;
 
+/** Indicates whether the cannon is ready to be used. */
 let cannonInit = false;
 
+/** Indicates whether you have lost the game. */
 let youLost = false;
 
+/** Main counter that keeps track of time as the 
+ * game progresses. */
 let gameCounter = 0;
 
-let lastRocketCount = 0;
+/** Variable that keeps track of when the next Rocket
+ * should appear. */
+let nextRocketCount = 0;
 
+/** Variable that tracks the number of rockets destroyed. */
 let missilesDestroyed = 0;
 
+/** Keeps track of changes to missilesDestroyed. */
 let lastMissileCount = 1;
 
+/** Indicates whether the end game message should
+ * be displayed. */
 let failureDisplay = true;
 
+/** Stores the highest score achieved by the user. */
 let highScore = 0;
 
 
@@ -84,29 +100,9 @@ function initialize(){
     initCounter++;
 }
 
-function restart() {
-    gameCounter = 0;
-    lastRocketCount = -1;
-    missilesDestroyed = 0;
-    let fail = document.getElementById("failure");
-    fail.style.visibility = "hidden";
-    youLost = false;
-    failureDisplay = true;
-}
-
-/** This initializes the background clouds.*/
-function initClouds() {
-    for (let i = 0; i < 16; i++) {
-        let width = getRndInteger(150, 300);
-        let height = getRndInteger(80, 150);
-        let dx = getRndInteger(-windowWidth, windowWidth);
-        let dy = getRndInteger(0, windowHeight / 2);
-        let vel = getRndInteger(10, 50);
-        newCloud(dx, dy, width, height, vel);
-    }
-}
-
-/** Updates the frame to add functionality. */
+/** Updates the frame to add functionality. This
+ * is the method that updates the view, and therefore
+ * is the view portion of the informal MVC layout  */
 function updateFrame() {
     updateClouds();
     missileContact();
@@ -135,8 +131,8 @@ function updateFrame() {
             updateScore();
             let random = getRndInteger(0, 200);
             let period = 10 + (1400 / (5 + gameCounter ** 0.33));
-            if (gameCounter > lastRocketCount) {
-                lastRocketCount = gameCounter + period + random;
+            if (gameCounter > nextRocketCount) {
+                nextRocketCount = gameCounter + period + random;
                 newRocket((1 + (gameCounter / 5000)));
             }
             gameCounter++;
@@ -144,6 +140,30 @@ function updateFrame() {
     }
 }
 
+function restart() {
+    gameCounter = 0;
+    nextRocketCount = -1;
+    missilesDestroyed = 0;
+    let fail = document.getElementById("failure");
+    fail.style.visibility = "hidden";
+    youLost = false;
+    failureDisplay = true;
+}
+
+/** This initializes the background clouds.*/
+function initClouds() {
+    for (let i = 0; i < 16; i++) {
+        let width = getRndInteger(150, 300);
+        let height = getRndInteger(80, 150);
+        let dx = getRndInteger(-windowWidth, windowWidth);
+        let dy = getRndInteger(0, windowHeight / 2);
+        let vel = getRndInteger(10, 50);
+        newCloud(dx, dy, width, height, vel);
+    }
+}
+
+/** Determines if the game score has changed and changes
+ * the HTML accordingly. */
 function updateScore() {
     if (missilesDestroyed !== lastMissileCount) {
         lastMissileCount = missilesDestroyed;
@@ -170,6 +190,9 @@ function newCloud(x, y, width, height, vel) {
     clouds.push(currCloud);
 }
 
+/** Updates the positions of the clouds, destroys clouds no
+ * longer in sight, and creates new clouds to keep a constant
+ * stream in the background. */
 function updateClouds() {
     for (i = 0; i < clouds.length; i++) {
         clouds[i].x += (1 / clouds[i].vel);
@@ -186,6 +209,7 @@ function updateClouds() {
     }
 }
 
+/** Initializes the cannon. */
 function makeCannon() {
     let img = document.createElement("img");
     img.id = "Cannon";
@@ -211,6 +235,8 @@ function makeCannon() {
     document.getElementById('mainbody').appendChild(img3);
 }
 
+/** Updates the position of the cannon based on the position
+ * of the mouse in the display. */
 function updateCannon() {
     var cannon = document.getElementById("Cannon");
     var tempX = x - cannon.offsetLeft - 95;
@@ -224,6 +250,7 @@ function updateCannon() {
     }
 }
 
+/** Creates a new bullet in the barrel of the cannon. */
 function newBullet(){
     if (!youLost) {
 
@@ -259,6 +286,9 @@ function newBullet(){
 
 }
 
+
+/** Updates the position and velocity of the bullets to
+ * create the effect of gravity acting on the bullets. */
 function updateBullets(){
     let html;
     for (i = 0; i < bullets.length; i++) {
@@ -277,6 +307,7 @@ function updateBullets(){
     }
 }
 
+/** Creates a new rocket on the right hand side of the screen. */
 function newRocket(vel){
     let rocket = document.createElement('img');
     rocket.src = 'images/lilrock.png';
@@ -291,6 +322,8 @@ function newRocket(vel){
     rockets.push(currRock);
 }
 
+/** Moves the rockets across the screen according at rates
+ * corresponding to their respective velocities. */
 function updateRockets() {
     let html;
     for (let i = 0; i < rockets.length; i++) {
@@ -305,6 +338,8 @@ function updateRockets() {
 
 }
 
+/** Checks if any bullets make contact with any rockets,
+ * and if so annihilates both objects.  */
 function missileContact() {
     let bull;
     let rock;
@@ -326,6 +361,8 @@ function missileContact() {
     }
 }
 
+/** Destroys all rockets on screen. This occurs after the
+ * user has lost the game */
 function xplodeAll() {
     let rock;
     for (let i = 0; i < rockets.length; i++) {
@@ -336,7 +373,8 @@ function xplodeAll() {
     rockets = [];
 }
 
-
+/** Creates a new explosion at the location where a
+ * rocket was just annihilated. */
 function newExplosion(x, y) {
     let splode = document.createElement('img');
     splode.src = 'images/boom.png';
@@ -349,6 +387,7 @@ function newExplosion(x, y) {
     splosions.push(currSplo);
 }
 
+/** Removes explosion images after 20 milliseconds. */
 function updateExplosions() {
     let splo;
     for (let i = 0; i < splosions.length; i++) {
@@ -359,9 +398,9 @@ function updateExplosions() {
             splosions.splice(i, 1);
         }
     }
-
 }
 
+/** Gets the distance between two points in pixels.*/
 function getDistance(x1, y1, x2, y2) {
     return ((x1 - x2)**2 + (y1 - y2)**2)**0.5;
 }

@@ -86,7 +86,6 @@ body {
 	width: 300px;
 	height: 165px;
 	background-image: url(images/cloud.png);
-	/*background-color: green;*/
 	top: 0;
 	left: 70px;
 	position: absolute;
@@ -114,7 +113,6 @@ body {
 }
 
 #start:active {
-	/*background-color: rgba(255, 255, 255, .4);*/
 	color: #702b26;;
 }
 
