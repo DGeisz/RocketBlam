@@ -1,0 +1,145 @@
+@font-face {
+	font-family: zorque;
+	src: url(fonts/zorque.ttf);
+}
+
+body {
+	font-family: "Luminari", fantasy;
+}
+
+#navbar {
+	z-index: 1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	position: fixed;
+	background-image: linear-gradient(to top, #5e5e5e, #a6a6a6);
+	display: inline;
+	box-shadow: 0 0 5px grey;
+	font-size: 1.3em;
+	text-shadow: 0 5px 50px black;
+	font-family: zorque;
+}
+
+.nav {
+	background-color: #cccccc;
+	padding: 15px;
+	box-shadow: 0px 5px 10px black;
+	border-radius: 2px;
+	color: black;
+}
+
+.nav:hover {
+	background-color: black;
+	color: #68e340;
+}
+
+.nav:active {
+	color: #702b26;
+}
+
+.home {
+	float: left;
+	margin-left: 0px;
+}
+
+.title {
+	color: #702b26;
+	text-align: center;
+	width: 40%;
+	margin: auto;
+	margin-top: 1px;
+	font-family: zorque;
+	font-size: 1.8em;
+	padding: 5px;
+}
+
+.title:hover {
+	background-color: #cccccc;
+	color: #702b26;
+}
+
+.restart {
+	float: right;
+	margin-right: 0px;
+	visibility: hidden;
+}
+
+#imbig {
+	padding-top: 30px;
+}
+
+#mainbody {
+	margin: auto;
+	margin-top: 80px;
+	overflow: hidden;
+	width: 900px;
+	height: 600px;
+	position: relative;
+	display: block;
+	box-shadow: 0 0 10px grey;
+	background-image: linear-gradient(20deg, #7db3ff, #bdd8ff);
+}
+
+
+.cloud {
+	width: 300px;
+	height: 165px;
+	background-image: url(images/cloud.png);
+	/*background-color: green;*/
+	top: 0;
+	left: 70px;
+	position: absolute;
+}
+
+#start {
+	margin: auto;
+	background-color: rgba(0, 0, 0, .5);
+	text-align: center;
+	border-radius: 5px;
+	top: 40%;
+	width: 50%;
+	height: 20%;
+	z-index: 1000;
+	position: relative;
+	box-shadow: 0 0 10px grey;
+	font-size: 5.3em;
+	color: #ff854d;
+}
+
+#start:hover {
+	background-color: black;
+	color: #68e340;
+	box-shadow: 0 0 20px black;
+}
+
+#start:active {
+	/*background-color: rgba(255, 255, 255, .4);*/
+	color: #702b26;;
+}
+
+#score {
+	font-family: zorque;
+	position: relative;
+	color: #702b26;;
+	font-size: 2em;
+	z-index: 1000;
+
+}
+
+#failure {
+	margin: auto;
+	background-color: rgba(0, 0, 0, .5);
+	visibility: hidden;
+	border-radius: 5px;
+	text-align: center;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+	position: absolute;
+	box-shadow: 0 0 10px grey;
+	font-size: 5.3em;
+	color: #68e340;
+	text-shadow: 0 5px 5px black;
+}
+

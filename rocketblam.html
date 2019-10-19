@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rocket Blam Game</title>
+	<script src="main.js"></script>
+    <script src="model.js"></script>
+    <script src="controller.js"></script>
+	<link rel="stylesheet" href="rocketblam.css">
+</head>
+<body id="body">
+	<div id="navbar">
+		<a id="chi" href="rocketblam.html"><div id="home" class="nav home">Home</div></a>
+		<div id="restart" class="nav restart" onclick="restart()">Restart</div>
+		<div class="nav title">Rocket Blam</div>
+	</div>
+    <div id="mainbody">
+		<div id="score"></div>
+		<div id="failure">
+			<div id="Message">You Goofed!!</div>
+			<div id="finalScore"></div>
+			<div id="highScore"></div>
+		</div>
+		<div id="start" onclick="gameInit()">Begin Game</div>
+    </div>
+</body>
+</html>
